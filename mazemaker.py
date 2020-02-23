@@ -61,7 +61,15 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 
-		# Generate oval obstacle
+		# Generate ellipse obstacle
+		ellipse_centerx=150
+		ellipse_centery=100
+		ellipse_major=40
+		ellipse_minor=20
+		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
+		for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
+			if(((x-ellipse_centerx)^2/ellipse_major^2)+((y-ellipse_centery)^2/ellipse_minor^2)<=1):
+					finalmaze[y][x]="#"
 
 
 		# Generate diamond obstacle
