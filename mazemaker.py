@@ -4,7 +4,9 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 	if(mazetype.lower()=="trial"):
 		print("Generating trial maze....")
-		trialmaze=np.full((100,200)," ")
+		width=200
+		height=100
+		trialmaze=np.full((height,width)," ")
 
 
 		# Create the square
@@ -17,11 +19,11 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 		radius=15
-		circle_boundbox_x=160-radius
-		circle_boundbox_y=100-50-radius
+		circle_boundbox_x=160-radius #Upper left corner of the bounding box around the circle
+		circle_boundbox_y=100-50-radius#Upper left corner of the bounding box around the circle
 
-		for x in range (circle_boundbox_x,circle_boundbox_x+radius):
-			for y in range(circle_boundbox_y,circle_boundbox_y+radius):
+		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
+			for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
 				if((x-160)^2+(y-50)^2<radius^2):
 					trialmaze[y][x]="#"	
 
@@ -38,11 +40,46 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 	if (mazetype.lower()=="final"):
 		print("Generating final maze....")
+		width=300
+		height=200
+		finalmaze=np.full((height,width)," ")
+
+
+		# Generate circle obstacle
+		radius=25
+		circle_centerx=300-75
+		circle_centery=50
+		circle_boundbox_x=circle_centerx-radius#Upper left corner of the bounding box around the circle
+		circle_boundbox_y=circle_centery-radius#Upper left corner of the bounding box around the circle
+
+
+		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
+			for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
+				if((x-circle_centerx)^2+(y-circle_centery)^2<radius^2):
+					finalmaze[y][x]="#"	
 
 
 
 
+		# Generate oval obstacle
 
+
+		# Generate diamond obstacle
+
+
+		# Generate rectangle obstacle
+
+
+
+		# Generate 6-poly obstacle
+
+
+
+		return finalmaze
+
+
+
+mazeMaker(final)
 
 
 
