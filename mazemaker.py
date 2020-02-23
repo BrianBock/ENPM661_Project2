@@ -29,6 +29,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 		print(trialmaze)
+		print("Trial Maze generated.")
 		return trialmaze
 
 
@@ -60,7 +61,6 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 
-
 		# Generate ellipse obstacle
 		ellipse_centerx=150
 		ellipse_centery=100
@@ -69,7 +69,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
 		for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
 			if(((x-ellipse_centerx)^2/ellipse_major^2)+((y-ellipse_centery)^2/ellipse_minor^2)<=1):
-					finalmaze[y][x]="#"
+				finalmaze[y][x]="#"
 
 
 		# Generate diamond obstacle
@@ -80,9 +80,12 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 		# Generate 6-poly obstacle
+		for x in range(25,75):
+			finalmaze[(200-185),x]="#"
 
 
 
+		print("Final Maze generated.")
 		return finalmaze
 
 
