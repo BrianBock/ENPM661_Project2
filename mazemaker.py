@@ -2,7 +2,7 @@ import numpy as np
 
 def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
-	if(mazetype=="Trial"):
+	if(mazetype.lower()=="trial"):
 		print("Generating trial maze....")
 		trialmaze=np.full((100,200)," ")
 
@@ -36,7 +36,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 
-	if mazetype=="Final":
+	if (mazetype.lower()=="final"):
 		print("Generating final maze....")
 
 
@@ -50,4 +50,4 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 
 
-		
+
