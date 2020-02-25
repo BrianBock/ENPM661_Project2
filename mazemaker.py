@@ -26,10 +26,10 @@ def mazeMakerTrial():
 	for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
 		for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
 			if((x-circle_centerx)**2+(y-circle_centery)**2<radius**2):
-				finalmaze[y][x]="#"	
+				trialmaze[y][x]="#"	
 
 
-	print(trialmaze)
+	#print(trialmaze)
 	print("Trial Maze generated.")
 	return trialmaze
 
@@ -65,9 +65,9 @@ def mazeMakerFinal():
 	ellipse_major=40
 	ellipse_minor=20
 	for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
-	for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
-		if(((x-ellipse_centerx)**2/ellipse_major**2)+((y-ellipse_centery)**2/ellipse_minor**2)<=1):
-			finalmaze[y][x]="#"
+		for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
+			if(((x-ellipse_centerx)**2/ellipse_major**2)+((y-ellipse_centery)**2/ellipse_minor**2)<=1):
+				finalmaze[y][x]="#"
 
 
 	# Generate diamond obstacle

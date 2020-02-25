@@ -37,7 +37,7 @@ def listToString(s):
 
 def maze_solver_dijkstra(start,goal):
     print("Sol of dijkstra")
-    maze=mazemaker.mazeMaker("trial")
+    maze=mazeMakerTrial()
     if maze[goal[0]][goal[1]]=="#"     or   maze[start[0]][start[1]]=="#":
         print("Cannot solve as start or goal is inside obstacle")
         return
