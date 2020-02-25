@@ -6,7 +6,8 @@ Created on Sun Feb 23 16:44:26 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import mazemaker
+from mazemaker import mazeMakerTrial
+
 def dist(current,parent):
     dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
     return dist
