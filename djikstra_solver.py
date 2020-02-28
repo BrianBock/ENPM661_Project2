@@ -6,7 +6,11 @@ Created on Sun Feb 23 16:44:26 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 from mazemaker import mazeMakerTrial
+import datetime
+from datetime import datetime as dtime
+import imutils
 
 def dist(current,parent):
     dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
@@ -36,14 +40,23 @@ def listToString(s):
 
 
 def maze_solver_dijkstra(start,goal):
-    print("Sol of dijkstra")
+    start_time = dtime.now()
+
+    start_square="S"
+    goal_square="X"
+    obst_char="#"
+    free_space=0
+    visited=3
+
+
+    #print("Sol of dijkstra")
     maze=mazeMakerTrial()
-    if maze[goal[0]][goal[1]]=="#"     or   maze[start[0]][start[1]]=="#":
+    if maze[goal[0]][goal[1]]==obst_char     or   maze[start[0]][start[1]]==obst_char:
         print("Cannot solve as start or goal is inside obstacle")
         return
     
-    maze[start[0]][start[1]]="O"
-    maze[goal[0]][goal[1]]="X"
+    maze[start[0]][start[1]]=start_square
+    maze[goal[0]][goal[1]]=goal_square
     
     file1 = open("nodePath.txt","w")                       #Open the file nodePath
     file1.truncate()                                             #erase all the content in the file1
@@ -51,26 +64,29 @@ def maze_solver_dijkstra(start,goal):
     file2.truncate()                                    #erase all the content in the file1
     file3 = open("NodesInfo.txt","w")
     file3.truncate()
+    print("Created files")
     #start=[]
     #goal=[]
-#    for i in range(len(maze)):
-#        for j in range(len(maze[0])):
-#            if maze[i][j]=="O" :
+#    for i in range(maze_width):
+#        for j in range(maze_height):
+#            if maze[i][j]==start_square :
 #                start=[i,j]
-#            if maze[i][j]=="X" :
+#            if maze[i][j]==goal_square :
 #                goal=[i,j]
-    maze_size=[len(maze),len(maze[0])]
+    maze_width=len(maze)
+    maze_height=len(maze[0])
+    maze_size=[maze_width,maze_height]
     my_maze=np.zeros((maze_size))
     print(maze_size)
-    for i in range(len(maze)):
-        for j in range(len(maze[0])):
-            if maze[i][j]=="O" :
+    for i in range(maze_width):
+        for j in range(maze_height):
+            if maze[i][j]==start_square :
                 my_maze[i][j]=5
-            if maze[i][j]=="X" :
+            if maze[i][j]==goal_square :
                 my_maze[i][j]=6                 #mark goal start and obstacles
             if maze[i][j]==" ":
                 my_maze[i][j]=1
-            if maze[i][j]=="#":
+            if maze[i][j]==obst_char:
                 my_maze[i][j]=2
     distance_from_start=np.zeros((maze_size))
     parent=np.zeros(([maze_size[0],maze_size[1],2]))
@@ -199,26 +215,39 @@ def maze_solver_dijkstra(start,goal):
 
             
     #print(route)
+    print("Done solving. Ready to plot")
+    output=np.zeros((maze_width,maze_height,3),np.uint8)
     for i in route:
         maze[int(i[0])][int(i[1])]="="
-        print(i)
-    maze[start[0]][start[1]]="O"
-    maze[goal[0]][goal[1]]="X"
+        #print(i)
+    maze[start[0]][start[1]]=start_square
+    maze[goal[0]][goal[1]]=goal_square
     plt.axis([0,200,0,100])
-    for m in range(len(maze)):
-        for n in range(len(maze[0])):
+    for m in range(maze_width):
+        for n in range(maze_height):
             if my_maze[m][n]==3:
-                plt.plot(n,m,'yo')
+                output[m][n]=[0,255,255]
+                #plt.plot(n,m,'yo')
             if my_maze[m][n]==4:
-                plt.plot(n,m,'mo')
-            if maze[m][n]=="#":
-                plt.plot(n,m,'ro')
+                output[m][n]=[255,0,255]
+                #plt.plot(n,m,'mo')
+            if maze[m][n]==obst_char:
+                output[m][n]=[0,0,255]
+                #plt.plot(n,m,'ro')
             if maze[m][n]=="=":
-                plt.plot(n,m,'bo')
-            
-    print(numExpanded)            
-    plt.show()
-        
+                output[m][n]=[255,0,0]
+                #plt.plot(n,m,'bo')
+
+    output=imutils.resize(output,width=800)
+    runtime=end_time-start_time
+    print("Finished solve in "+str(runtime)+" (hours:min:sec)")
+
+    cv2.imshow("Output",output)
+    cv2.waitKey(0)
+    #print(numExpanded)
+    end_time=dtime.now()
+      
+       
         
         #print(maze)
     
