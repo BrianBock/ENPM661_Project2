@@ -7,7 +7,8 @@ Created on Sun Feb 23 16:44:26 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-from mazemaker import mazeMakerTrial
+#from mazemaker import mazeMakerTrial
+from image_mazemaker import*
 import datetime
 from datetime import datetime as dtime
 import imutils
@@ -50,7 +51,7 @@ def maze_solver_dijkstra(start,goal):
 
 
     #print("Sol of dijkstra")
-    maze=mazeMakerTrial()
+    maze=mazeMakerFinal()
     if maze[goal[0]][goal[1]]==obst_char     or   maze[start[0]][start[1]]==obst_char:
         print("Cannot solve as start or goal is inside obstacle")
         return
@@ -225,17 +226,17 @@ def maze_solver_dijkstra(start,goal):
     plt.axis([0,200,0,100])
     for m in range(maze_width):
         for n in range(maze_height):
-            if my_maze[m][n]==3:
-                output[m][n]=[0,255,255]
+            if my_maze[m][n]==3: # Visited
+                output[m][n]=[0,255,255] #yellow
                 #plt.plot(n,m,'yo')
-            if my_maze[m][n]==4:
-                output[m][n]=[255,0,255]
+            if my_maze[m][n]==4: # Searched
+                output[m][n]=[255,0,255] #pink
                 #plt.plot(n,m,'mo')
-            if maze[m][n]==obst_char:
-                output[m][n]=[0,0,255]
+            if maze[m][n]=="#": # Obstacle
+                output[m][n]=[0,0,255] #red
                 #plt.plot(n,m,'ro')
-            if maze[m][n]=="=":
-                output[m][n]=[255,0,0]
+            if maze[m][n]=="=": # Path
+                output[m][n]=[255,0,0] #blue
                 #plt.plot(n,m,'bo')
 
     output=imutils.resize(output,width=800)
