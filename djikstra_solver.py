@@ -102,8 +102,8 @@ def maze_solver_dijkstra(start,goal):
     
     
     while 1:
-        my_maze[start[0]][start[1]]=5
-        my_maze[goal[0]][goal[1]]=6
+        # my_maze[start[0]][start[1]]=5
+        # my_maze[goal[0]][goal[1]]=6
         
         min_dist=float('inf')
         for i in range(len(distance_from_start)):
@@ -239,13 +239,14 @@ def maze_solver_dijkstra(start,goal):
                 #plt.plot(n,m,'bo')
 
     output=imutils.resize(output,width=800)
+    end_time=dtime.now()
     runtime=end_time-start_time
     print("Finished solve in "+str(runtime)+" (hours:min:sec)")
 
     cv2.imshow("Output",output)
     cv2.waitKey(0)
     #print(numExpanded)
-    end_time=dtime.now()
+    
       
        
         
