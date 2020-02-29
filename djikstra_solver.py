@@ -267,10 +267,10 @@ def maze_solver_dijkstra(start,goal):
         output=addToVideo(output,int(i[0]),int(i[1]),"=",video_out)
 
         #print(i)
-        
+
     # Pad some frames at the end of the video
     q=0
-    while q<20:
+    while q<1000:
         video_out.write(output)
         q+=1
 
