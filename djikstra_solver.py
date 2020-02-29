@@ -7,11 +7,12 @@ Created on Sun Feb 23 16:44:26 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-#from mazemaker import mazeMakerTrial
-from image_mazemaker import*
+from mazemaker import*
+#from image_mazemaker import*
 import datetime
 from datetime import datetime as dtime
 import imutils
+import time
 
 def dist(current,parent):
     dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
@@ -32,6 +33,25 @@ def listToString(s):
     return str1 
 
 
+def addToVideo(frame, x, y, status, video_out):#addToVideo(output,(x,y),3,video_out)
+    print("Saving frame to video")
+    if status==3: # Visited
+        frame[x][y]=[0,255,255] #yellow
+
+    elif status==4: # Searched
+        frame[x][y]=[255,0,255] #pink
+
+    elif status=="#": # Obstacle
+        frame[x][y]=[0,0,255] #red
+
+    elif status=="=": # Path
+        frame[x][y]=[255,0,0] #blue
+
+    else:
+        print("Illegal status code")
+    video_out.write(frame)
+    #cv2.imshow("Frame",frame)
+    return frame
 
 
 
@@ -48,10 +68,28 @@ def maze_solver_dijkstra(start,goal):
     obst_char="#"
     free_space=0
     visited=3
+    write_to_video=True
+    mazetype="Trial"
+
+
+
+    # Define the codec and initialize the output file
+    if write_to_video:
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        today = time.strftime("%m-%d__%H.%M.%S")
+        videoname=str(mazetype)+str(today)
+        fps_out = 29
+        video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (1920, 1080))
+       # print("Writing to Video, Please Wait")
+
+
+
+
+
 
 
     #print("Sol of dijkstra")
-    maze=mazeMakerFinal()
+    maze=mazeMaker(mazetype)
     if maze[goal[0]][goal[1]]==obst_char     or   maze[start[0]][start[1]]==obst_char:
         print("Cannot solve as start or goal is inside obstacle")
         return
@@ -78,6 +116,10 @@ def maze_solver_dijkstra(start,goal):
     maze_height=len(maze[0])
     maze_size=[maze_width,maze_height]
     my_maze=np.zeros((maze_size))
+
+
+    output=np.zeros((maze_width,maze_height,3),np.uint8)
+
     print(maze_size)
     for i in range(maze_width):
         for j in range(maze_height):
@@ -121,6 +163,7 @@ def maze_solver_dijkstra(start,goal):
         if current==goal  or min_dist==float('inf'):
             break
         my_maze[current[0]][current[1]]=3                           #node is visited
+        output=addToVideo(output,current[0],current[1],3,video_out)
         distance_from_start[current[0]][current[1]]=float('inf')     #so that next node is explored
         
         if current[1]<maze_size[1]-1:
@@ -241,6 +284,8 @@ def maze_solver_dijkstra(start,goal):
 
     output=imutils.resize(output,width=800)
     end_time=dtime.now()
+
+
     runtime=end_time-start_time
     print("Finished solve in "+str(runtime)+" (hours:min:sec)")
 
