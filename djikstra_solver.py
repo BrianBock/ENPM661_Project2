@@ -34,7 +34,7 @@ def listToString(s):
 
 
 def addToVideo(frame, x, y, status, video_out):#addToVideo(output,(x,y),3,video_out)
-    print("Saving frame to video")
+    #print("Saving frame to video")
     if status==3: # Visited
         frame[x][y]=[0,255,255] #yellow
 
@@ -50,6 +50,7 @@ def addToVideo(frame, x, y, status, video_out):#addToVideo(output,(x,y),3,video_
     else:
         print("Illegal status code")
     video_out.write(frame)
+    #print("Frame saved")
     #cv2.imshow("Frame",frame)
     return frame
 
@@ -73,23 +74,9 @@ def maze_solver_dijkstra(start,goal):
 
 
 
-    # Define the codec and initialize the output file
-    if write_to_video:
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        today = time.strftime("%m-%d__%H.%M.%S")
-        videoname=str(mazetype)+str(today)
-        fps_out = 29
-        video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (1920, 1080))
-       # print("Writing to Video, Please Wait")
-
-
-
-
-
-
-
     #print("Sol of dijkstra")
-    maze=mazeMaker(mazetype)
+    output,maze=mazeMaker(mazetype)
+
     if maze[goal[0]][goal[1]]==obst_char     or   maze[start[0]][start[1]]==obst_char:
         print("Cannot solve as start or goal is inside obstacle")
         return
@@ -118,7 +105,20 @@ def maze_solver_dijkstra(start,goal):
     my_maze=np.zeros((maze_size))
 
 
-    output=np.zeros((maze_width,maze_height,3),np.uint8)
+
+
+    # Define the codec and initialize the output file
+    if write_to_video:
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        today = time.strftime("%m-%d__%H.%M.%S")
+        videoname=str(mazetype)+str(today)
+        fps_out = 500
+        video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_height, maze_width))
+        print("Writing to Video, Please Wait")
+
+
+
+    #output=mazeMaker("Trial")[0]
 
     print(maze_size)
     for i in range(maze_width):
@@ -234,7 +234,8 @@ def maze_solver_dijkstra(start,goal):
                     
                     parent[int(adjacent[n][0])] [int(adjacent[n][1])]=current
                     temp=n                #so that we know the node entered this loop
-                my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4                               #node is looked at
+                my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4  #node is looked at
+                output=addToVideo(output,adjacent[n][0],adjacent[n][1],4,video_out)
         numExpanded=numExpanded+1
         current=adjacent[temp]
         #print(distance_from_start)
@@ -260,27 +261,37 @@ def maze_solver_dijkstra(start,goal):
             
     #print(route)
     print("Done solving. Ready to plot")
-    output=np.zeros((maze_width,maze_height,3),np.uint8)
+    #output=np.zeros((maze_width,maze_height,3),np.uint8)
     for i in route:
         maze[int(i[0])][int(i[1])]="="
+        output=addToVideo(output,int(i[0]),int(i[1]),"=",video_out)
+
         #print(i)
+        
+    # Pad some frames at the end of the video
+    q=0
+    while q<20:
+        video_out.write(output)
+        q+=1
+
+
     maze[start[0]][start[1]]=start_square
     maze[goal[0]][goal[1]]=goal_square
     plt.axis([0,200,0,100])
-    for m in range(maze_width):
-        for n in range(maze_height):
-            if my_maze[m][n]==3: # Visited
-                output[m][n]=[0,255,255] #yellow
-                #plt.plot(n,m,'yo')
-            if my_maze[m][n]==4: # Searched
-                output[m][n]=[255,0,255] #pink
-                #plt.plot(n,m,'mo')
-            if maze[m][n]=="#": # Obstacle
-                output[m][n]=[0,0,255] #red
-                #plt.plot(n,m,'ro')
-            if maze[m][n]=="=": # Path
-                output[m][n]=[255,0,0] #blue
-                #plt.plot(n,m,'bo')
+    # for m in range(maze_width):
+    #     for n in range(maze_height):
+    #         if my_maze[m][n]==3: # Visited
+    #             output[m][n]=[0,255,255] #yellow
+    #             #plt.plot(n,m,'yo')
+    #         if my_maze[m][n]==4: # Searched
+    #             output[m][n]=[255,0,255] #pink
+    #             #plt.plot(n,m,'mo')
+    #         if maze[m][n]=="#": # Obstacle
+    #             output[m][n]=[0,0,255] #red
+    #             #plt.plot(n,m,'ro')
+    #         if maze[m][n]=="=": # Path
+    #             output[m][n]=[255,0,0] #blue
+    #             #plt.plot(n,m,'bo')
 
     output=imutils.resize(output,width=800)
     end_time=dtime.now()

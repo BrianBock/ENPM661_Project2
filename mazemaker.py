@@ -6,7 +6,7 @@ def mazeMakerTrial():
 	print("Generating trial maze....")
 	width=200
 	height=100
-	imagemaze=np.zeros((height,width),np.uint8)
+	imagemaze=np.zeros((height,width,3),np.uint8)
 
 
 	# Create the square
@@ -28,16 +28,16 @@ def mazeMakerTrial():
 	maze=np.empty((height,width),dtype='object')
 	for row in range(0,width):
 		for col in range(0,height):
-			if (imagemaze[col][row]==0):
+			if (imagemaze[col][row].all()==0):
 				maze[col][row]=" "
-			elif(imagemaze[col][row]==255):
+			elif(imagemaze[col][row].all()==255):
 				maze[col][row]="#"
 	# print(maze)
 
 
 	#print(imagemaze)
 	print("Trial Maze generated.")
-	return maze
+	return imagemaze, maze
 
 
 # mazeMakerTrial()
@@ -48,7 +48,7 @@ def mazeMakerFinal():
 	print("Generating final maze....")
 	width=300
 	height=200
-	imagemaze=np.zeros((height,width),np.uint8)
+	imagemaze=np.zeros((height,width,3),np.uint8)
 
 
 
@@ -103,7 +103,7 @@ def mazeMakerFinal():
 
 
 	print("Final Maze generated.")
-	return maze
+	return [imagemaze, maze]
 
 
 
