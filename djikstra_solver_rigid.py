@@ -34,7 +34,7 @@ def listToString(s):
 
 
 def robotInspace(x,y,d,maze):
-    if maze[x][y]=="#":
+    if maze[x][y]==2:
         return False
     if (d*d)-(x*x)>0:
         return False
@@ -45,7 +45,7 @@ def robotInspace(x,y,d,maze):
     for i in range(12):
         x1=x+(d*np.cos(2*3.14159/12*(i)))
         y1=y+(d*np.sin(2*3.14159/12*(i)))
-        if maze[int(x1)][int(y1)]=="#":
+        if maze[int(x1)][int(y1)]==2:
             return False
     return True
         
@@ -61,52 +61,35 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
     d=(diameter/2)+clearance
     print("Sol of dijkstra")
     maze=mazemaker.mazeMaker("trial")
-    if maze[goal[0]][goal[1]]=="#"     or   maze[start[0]][start[1]]=="#":
+    if maze[goal[0]][goal[1]]==2    or   maze[start[0]][start[1]]==2:
         print("Cannot solve as start or goal is inside obstacle")
         return
     
-    maze[start[0]][start[1]]="O"
-    maze[goal[0]][goal[1]]="X"
+    maze[start[0]][start[1]]=5
+    maze[goal[0]][goal[1]]=6
     
-    file1 = open("nodePath.txt","w")                       #Open the file nodePath
-    file1.truncate()                                             #erase all the content in the file1
-    file2 = open("Nodes.txt","w")                                 
-    file2.truncate()                                    #erase all the content in the file1
-    file3 = open("NodesInfo.txt","w")
-    file3.truncate()
-    #start=[]
-    #goal=[]
-#    for i in range(len(maze)):
-#        for j in range(len(maze[0])):
-#            if maze[i][j]=="O" :
-#                start=[i,j]
-#            if maze[i][j]=="X" :
-#                goal=[i,j]
+    
+
     maze_size=[len(maze),len(maze[0])]
-    my_maze=np.zeros((maze_size))
+   
+    my_maze=maze
+    my_maze[start[0]][start[1]]=5
+    my_maze[goal[0]][goal[1]]=6
     print(maze_size)
-    for i in range(len(maze)):
-        for j in range(len(maze[0])):
-            if maze[i][j]=="O" :
-                my_maze[i][j]=5
-            if maze[i][j]=="X" :
-                my_maze[i][j]=6                 #mark goal start and obstacles
-            if maze[i][j]==" ":
-                my_maze[i][j]=1
-            if maze[i][j]=="#":
-                my_maze[i][j]=2
+
     distance_from_start=np.zeros((maze_size))
     parent=np.zeros(([maze_size[0],maze_size[1],2]))
     
-    for i in range(len(distance_from_start)):
-        for j in range(len(distance_from_start[0])):
-            distance_from_start[i][j]=float('inf');
+
+            
+    distance_from_start=np.full((maze_size[0],maze_size[1]), np.inf)
     numExpanded=0
     distance_from_start[start[0]][start[1]]=0
     
     
     current=start
-    
+    expanded=[]
+    expanded.append(start)
     if robotInspace(start[0],start[1],d,maze)==False     or  robotInspace(goal[0],goal[1],d,maze)==False   :
             print("Could not solve")
             return
@@ -115,20 +98,19 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
         my_maze[goal[0]][goal[1]]=6
         
         min_dist=float('inf')
-        for i in range(len(distance_from_start)):
-            for j in range(len(distance_from_start[0])):
+
                 
-                if min_dist>distance_from_start[i][j]:                  #stepping forward from the same min distance valued node in every iteration
-                    #print([i,j])
-                    min_dist=distance_from_start[i][j]
-                    current[0]=i
-                    current[1]=j
+        for c in expanded:
+            if min_dist>distance_from_start[c[0]][c[1]]:
+                min_dist=distance_from_start[c[0]][c[1]]
+                current=c
                     
                 
         #print(current)
         if current==goal  or min_dist==float('inf'):
             break
         my_maze[current[0]][current[1]]=3                           #node is visited
+        expanded.remove(current)
         distance_from_start[current[0]][current[1]]=float('inf')     #so that next node is explored
         
         if current[1]<maze_size[1]-1     and   robotInspace(current[0],current[1]+1,d,maze)==True:
@@ -201,8 +183,11 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
                     parent[int(adjacent[n][0])] [int(adjacent[n][1])]=current
                     temp=n                #so that we know the node entered this loop
                 my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4                               #node is looked at
+                expanded.append(adjacent[n])
+        
         numExpanded=numExpanded+1
         current=adjacent[temp]
+        
         #print(distance_from_start)
         #time.sleep(1)
         #print(parent)
@@ -226,10 +211,10 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
             
     #print(route)
     for i in route:
-        maze[int(i[0])][int(i[1])]="="
+        maze[int(i[0])][int(i[1])]=0
         print(i)
-    maze[start[0]][start[1]]="O"
-    maze[goal[0]][goal[1]]="X"
+    maze[start[0]][start[1]]=5
+    maze[goal[0]][goal[1]]=6
     plt.axis([0,200,0,100])
     for m in range(len(maze)):
         for n in range(len(maze[0])):
@@ -237,9 +222,9 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
                 #plt.plot(n,m,'yo')
             #if my_maze[m][n]==4:
                 #plt.plot(n,m,'mo')
-            if maze[m][n]=="#":
+            if my_maze[m][n]==2:
                 plt.plot(n,m,'ro')
-            if maze[m][n]=="=":
+            if maze[m][n]==0:
                 plt.plot(n,m,'bo',markersize=int(d*2))
             
     print(numExpanded)            
