@@ -109,7 +109,14 @@ def mazeMakerFinal():
 
 #mazeMakerFinal()
 
-
+def mazeMaker(mazetype):
+	if mazetype.lower()=="trial":
+		return mazeMakerTrial()
+	elif mazetype.lower()=="final":
+		return mazeMakerFinal()
+	else:
+		print("Invalid maze type selected. Quitting")
+		exit()
 
 
 
