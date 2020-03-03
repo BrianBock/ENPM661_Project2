@@ -45,15 +45,15 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		print("Generating final maze....")
 		width=300
 		height=200
-		#imagemaze=np.zeros((height,width,3),np.uint8)
-		finalmaze=np.full((height,width),1)
+		finalmaze=np.zeros((height,width,3),np.uint8)
+		# finalmaze=np.full((height,width),1)
 
 
 		# Generate circle obstacle
 		radius=25
 		circle_centerx=300-75
 		circle_centery=50
-		cv2.circle(finalmaze,(circle_centerx,circle_centery),radius,(2),-1)
+		cv2.circle(finalmaze,(circle_centerx,circle_centery),radius,(255,255,255),-1)
 
 		
 
@@ -63,11 +63,11 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		ellipse_axes=(40,20) #major, minor axis
 
 		
-		cv2.ellipse(finalmaze,ellipse_center,ellipse_axes,0,0,360,2,-1)
+		cv2.ellipse(finalmaze,ellipse_center,ellipse_axes,0,0,360,(255,255,255),-1)
 
 		# Generate diamond obstacle
 		diamondpts=np.array([[225,190],[250,175],[225,160],[200,175]])
-		cv2.drawContours(finalmaze,[diamondpts],-1,2,-1)
+		cv2.drawContours(finalmaze,[diamondpts],-1,(255,255,255),-1)
 
 
 		# Generate rectangle obstacle
@@ -80,29 +80,29 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		x4=x3+int(75*math.cos(math.radians(30)))
 		y4=y3+int(75*math.sin(math.radians(30)))
 		rectpoints=np.array([[x1,y1], [x2,y2],[x3,y3], [x4,y4]])
-		cv2.drawContours(finalmaze,[rectpoints],-1,2,-1)
+		cv2.drawContours(finalmaze,[rectpoints],-1,(255,255,255),-1)
 		
 
 		# Generate 6-poly obstacle
 		polypts=np.array([[25,15], [75,15], [100,50], [75,80], [50,50], [20,80]])
-		cv2.drawContours(finalmaze,[polypts],-1,2,-1)
-		# cv2.imshow("The maze",imagemaze)
-		# cv2.waitKey(0)
+		cv2.drawContours(finalmaze,[polypts],-1,(255,255,255),-1)
+		cv2.imshow("The maze",finalmaze)
+		cv2.waitKey(0)
 
-		# maze=np.empty((height,width),dtype='object')
-		# for row in range(0,width):
-		# 	for col in range(0,height):
-		# 		if (imagemaze[col][row].all()==0):
-		# 			maze[col][row]=1
-		# 		elif(imagemaze[col][row].all()==255):
-		# 			maze[col][row]=2
-		# #print(maze)
+		maze=np.empty((height,width),dtype='object')
+		for row in range(0,width):
+			for col in range(0,height):
+				if (finalmaze[col][row].all()==0):
+					maze[col][row]=1
+				elif(finalmaze[col][row].all()==255):
+					maze[col][row]=2
+		print(maze)
 
 
 		print("Final Maze generated.")
-		return finalmaze
+		return maze
 
 
-
+# mazeMaker("final")
 
 
