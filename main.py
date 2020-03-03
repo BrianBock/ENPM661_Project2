@@ -2,6 +2,7 @@
 from functions import*
 from djikstra import*
 
+
 print("Welcome to our djikstra solver!")
 
 type_needed=True
@@ -68,7 +69,7 @@ while goal_needed==True:
 	goaly=int(goaly)
 	if goalx > mazewidth or goaly >mazeheight:
 		print("That goal position is outside of the maze. The maze you selected has dimensions ("+str(mazewidth)+","+str(mazeheight)+"). Try again.")
-	elif goalx==startx and goaly==starty
+	elif goalx==startx and goaly==starty:
 		print("That goal is the same as the start position! Try something harder.")
 	else:
 		goal_needed=False
