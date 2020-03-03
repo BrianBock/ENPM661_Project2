@@ -2,7 +2,7 @@
 """
 Created on Sun Feb 23 16:44:26 2020
 
-@author: prana
+@author: bbock and prana
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -70,7 +70,7 @@ def maze_solver_dijkstra(mazetype,start,goal):
         for x in range(len(maze[0])):
             if my_maze[y][x]==2:
                 output[y][x]=(0,0,255)
-    cv2.imshow("Output", output)
+    # cv2.imshow("Output", output)
     print(len(output),len(output[0]))
 
     print(maze_size)
@@ -309,7 +309,7 @@ def rigid_djikstra(mazetype,start,goal,diameter,clearance):
         for x in range(len(maze[0])):
             if my_maze[y][x]==2:
                 output[y][x]=(0,0,255)
-    cv2.imshow("Output", output)
+    # cv2.imshow("Output", output)
 
 
 
