@@ -63,19 +63,13 @@ while start_needed==True:
 
 goal_needed=True
 while goal_needed==True:
-	goalx,goaly=input("Enter the start position 'x y':\n").split()
+	goalx,goaly=input("Enter the goal position 'x y':\n").split()
 	goalx=int(goalx)
 	goaly=int(goaly)
 	if goalx > mazewidth or goaly >mazeheight:
 		print("That goal position is outside of the maze. The maze you selected has dimensions ("+str(mazewidth)+","+str(mazeheight)+"). Try again.")
 	else:
 		goal_needed=False
-
-
-goalx,goaly=input("Enter the goal position 'x y':\n").split()
-goalx=int(goalx)
-goaly=int(goaly)
-
 
 djikstra(robot_type,mazetype,startx,starty,goalx,goaly,diameter,clearance)
 
