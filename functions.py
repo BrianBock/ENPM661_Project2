@@ -51,9 +51,10 @@ def addToVideo(frame, y, x, status, video_out,show_robot):#addToVideo(output,(y,
         circle_frame=cv2.circle(frame.copy(), (x,y), int(show_robot[1]), (0,255,0), 1)
         video_out.write(circle_frame)
     
-    #print("Frame saved")
-    #cv2.imshow("Frame",frame)
-    #cv2.waitKey(1)
+    
     else:
         video_out.write(frame)
+        #print("Frame saved")
+        cv2.imshow("Frame",frame)
+        cv2.waitKey(1)
     return frame
