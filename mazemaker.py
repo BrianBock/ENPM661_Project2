@@ -1,4 +1,6 @@
 import numpy as np
+import cv2
+import math
 
 def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
@@ -43,53 +45,64 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		print("Generating final maze....")
 		width=300
 		height=200
-		finalmaze=np.full((height,width)," ")
+		#imagemaze=np.zeros((height,width,3),np.uint8)
+		finalmaze=np.full((height,width),1)
 
 
 		# Generate circle obstacle
 		radius=25
 		circle_centerx=300-75
 		circle_centery=50
-		circle_boundbox_x=circle_centerx-radius#Upper left corner of the bounding box around the circle
-		circle_boundbox_y=circle_centery-radius#Upper left corner of the bounding box around the circle
+		cv2.circle(finalmaze,(circle_centerx,circle_centery),radius,(2),-1)
 
-
-		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
-			for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
-				if((x-circle_centerx)^2+(y-circle_centery)^2<radius^2):
-					finalmaze[y][x]=2
-
-
-
-		# Generate ellipse obstacle
-		ellipse_centerx=150
-		ellipse_centery=100
-		ellipse_major=40
-		ellipse_minor=20
-#		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
-#            for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
-#                if(((x-ellipse_centerx)^2/ellipse_major^2)+((y-ellipse_centery)^2/ellipse_minor^2)<=1):
-#				finalmaze[y][x]="#"
-            
-			
 		
 
+		# Generate ellipse obstacle
+
+		ellipse_center=(150,100) #x,y
+		ellipse_axes=(40,20) #major, minor axis
+
+		
+		cv2.ellipse(finalmaze,ellipse_center,ellipse_axes,0,0,360,2,-1)
 
 		# Generate diamond obstacle
+		diamondpts=np.array([[225,190],[250,175],[225,160],[200,175]])
+		cv2.drawContours(finalmaze,[diamondpts],-1,2,-1)
 
 
 		# Generate rectangle obstacle
-
-
+		x1=95
+		y1=170
+		x2=x1-int(75*math.cos(math.radians(30)))
+		y2=170-int(75*math.sin(math.radians(30)))
+		x3=x2+int(10*math.cos(math.radians(60)))
+		y3=y2-int(10*math.sin(math.radians(60)))
+		x4=x3+int(75*math.cos(math.radians(30)))
+		y4=y3+int(75*math.sin(math.radians(30)))
+		rectpoints=np.array([[x1,y1], [x2,y2],[x3,y3], [x4,y4]])
+		cv2.drawContours(finalmaze,[rectpoints],-1,2,-1)
+		
 
 		# Generate 6-poly obstacle
-		for x in range(25,75):
-			finalmaze[(200-185),x]=2
+		polypts=np.array([[25,15], [75,15], [100,50], [75,80], [50,50], [20,80]])
+		cv2.drawContours(finalmaze,[polypts],-1,2,-1)
+		# cv2.imshow("The maze",imagemaze)
+		# cv2.waitKey(0)
 
+		# maze=np.empty((height,width),dtype='object')
+		# for row in range(0,width):
+		# 	for col in range(0,height):
+		# 		if (imagemaze[col][row].all()==0):
+		# 			maze[col][row]=1
+		# 		elif(imagemaze[col][row].all()==255):
+		# 			maze[col][row]=2
+		# #print(maze)
 
 
 		print("Final Maze generated.")
 		return finalmaze
+
+
 
 
 
