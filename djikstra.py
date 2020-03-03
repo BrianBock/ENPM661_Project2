@@ -225,24 +225,9 @@ def maze_solver_dijkstra(mazetype,start,goal):
 
     cv2.imshow("Final",output)
     cv2.waitKey(0)
-    # plt.axis([0,200,0,100])
-    # for m in range(len(maze)):
-    #     for n in range(len(maze[0])):
-    #         if my_maze[m][n]==3:
-    #             plt.plot(n,m,'yo')
-    #         if my_maze[m][n]==4:
-    #             plt.plot(n,m,'mo')
-    #         if my_maze[m][n]==2:
-    #             plt.plot(n,m,'ro')
-    #         if my_maze[m][n]==0:
-    #             plt.plot(n,m,'bo')
-            
-    print(numExpanded)            
-    # plt.show()
-        
-        
-        #print(maze)
-   
+
+    print("Done!")            
+
 
 
 
@@ -484,23 +469,7 @@ def rigid_djikstra(mazetype,start,goal,diameter,clearance):
 
     cv2.imshow("Final",output)
     cv2.waitKey(0)
-    # plt.axis([0,200,0,100])
-    # for m in range(len(maze)):
-    #     for n in range(len(maze[0])):
-    #         #if my_maze[m][n]==3:
-    #             #plt.plot(n,m,'yo')
-    #         #if my_maze[m][n]==4:
-    #             #plt.plot(n,m,'mo')
-    #         if my_maze[m][n]==2:
-    #             plt.plot(n,m,'ro')
-    #         if my_maze[m][n]==0:
-    #             plt.plot(n,m,'bo',markersize=int(d*2))
-            
-    # print(numExpanded)            
-    # plt.show()
-        
-        
-        #print(maze)
+    print("Done!")
 
 
 
