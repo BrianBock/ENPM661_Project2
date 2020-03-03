@@ -482,9 +482,9 @@ def rigid_djikstra(mazetype,start,goal,diameter,clearance):
 
 def djikstra(robot_type,mazetype,startx,starty,goalx,goaly,diameter,clearance):
     if robot_type.lower()=="point":
-        maze_solver_dijkstra(mazetype,[startx,starty],[goalx,goaly])
+        maze_solver_dijkstra(mazetype,[starty,startx],[goalx,goaly])
     elif robot_type.lower()=="rigid":
-        rigid_djikstra(mazetype,[startx,starty],[goalx,goaly],diameter,clearance)            #start, end, robot_diameter,clearance)
+        rigid_djikstra(mazetype,[starty,startx],[goaly,goalx],diameter,clearance)            #start, end, robot_diameter,clearance)
 
     return
 
