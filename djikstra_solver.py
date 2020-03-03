@@ -51,7 +51,7 @@ def maze_solver_dijkstra(start,goal):
     if write_to_video:
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         today = time.strftime("%m-%d__%H.%M.%S")
-        videoname=str(mazetype)+str(today)
+        videoname="Point"+str(mazetype)+str(today)
         fps_out = 500
         video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
         # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
