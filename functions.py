@@ -1,5 +1,5 @@
 import numpy as np
-
+import cv2
 
 def dist(current,parent):
     dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
@@ -30,7 +30,7 @@ def listToString(s):
 
 
 
-def addToVideo(frame, y, x, status, video_out):#addToVideo(output,(x,y),3,video_out)
+def addToVideo(frame, y, x, status, video_out,show_robot):#addToVideo(output,(y,x),3,video_out,[True, radius])
     #print("Saving frame to video")
     if status==3: # Visited
         frame[y][x]=[0,255,255] #yellow
@@ -47,9 +47,13 @@ def addToVideo(frame, y, x, status, video_out):#addToVideo(output,(x,y),3,video_
     else:
         print("Illegal status code")
     
+    if show_robot[0]==True:
+        circle_frame=cv2.circle(frame.copy(), (x,y), int(show_robot[1]), (0,255,0), 1)
+        video_out.write(circle_frame)
     
     #print("Frame saved")
     #cv2.imshow("Frame",frame)
     #cv2.waitKey(1)
-    video_out.write(frame)
+    else:
+        video_out.write(frame)
     return frame

@@ -12,7 +12,7 @@ Created on Sun Feb 23 16:44:26 2020
 @author: prana
 """
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import mazemaker
 import cv2
 import datetime
@@ -69,6 +69,7 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
 
 
     d=(diameter/2)+clearance
+    robot_radius=diameter/2
     print("Sol of dijkstra")
     maze=mazemaker.mazeMaker("trial")
     if maze[goal[0]][goal[1]]==2    or   maze[start[0]][start[1]]==2:
@@ -148,7 +149,7 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
         if current==goal  or min_dist==float('inf'):
             break
         my_maze[current[0]][current[1]]=3                           #node is visited
-        output=addToVideo(output,current[0],current[1],3,video_out)
+        output=addToVideo(output,current[0],current[1],3,video_out,[False,0])
 
         expanded.remove(current)
         distance_from_start[current[0]][current[1]]=float('inf')     #so that next node is explored
@@ -223,7 +224,7 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
                     parent[int(adjacent[n][0])] [int(adjacent[n][1])]=current
                     temp=n                #so that we know the node entered this loop
                 my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4                               #node is looked at
-                output=addToVideo(output,int(adjacent[n][0]),int(adjacent[n][1]),4,video_out)
+                output=addToVideo(output,int(adjacent[n][0]),int(adjacent[n][1]),4,video_out, [False,0])
 
                 expanded.append(adjacent[n])
         
@@ -254,24 +255,37 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
     #print(route)
     for i in route:
         maze[int(i[0])][int(i[1])]=0
-        output=addToVideo(output,int(i[0]),int(i[1]),0,video_out)
+
+        #Slow it down
+        for j in range(100):
+            output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[True,robot_radius])
         print(i)
     maze[start[0]][start[1]]=5
     maze[goal[0]][goal[1]]=6
-    plt.axis([0,200,0,100])
-    for m in range(len(maze)):
-        for n in range(len(maze[0])):
-            #if my_maze[m][n]==3:
-                #plt.plot(n,m,'yo')
-            #if my_maze[m][n]==4:
-                #plt.plot(n,m,'mo')
-            if my_maze[m][n]==2:
-                plt.plot(n,m,'ro')
-            if my_maze[m][n]==0:
-                plt.plot(n,m,'bo',markersize=int(d*2))
+
+        # Pad some frames at the end of the video
+    q=0
+    while q<1000:
+        video_out.write(output)
+        q+=1
+
+
+    cv2.imshow("Final",output)
+    cv2.waitKey(0)
+    # plt.axis([0,200,0,100])
+    # for m in range(len(maze)):
+    #     for n in range(len(maze[0])):
+    #         #if my_maze[m][n]==3:
+    #             #plt.plot(n,m,'yo')
+    #         #if my_maze[m][n]==4:
+    #             #plt.plot(n,m,'mo')
+    #         if my_maze[m][n]==2:
+    #             plt.plot(n,m,'ro')
+    #         if my_maze[m][n]==0:
+    #             plt.plot(n,m,'bo',markersize=int(d*2))
             
-    print(numExpanded)            
-    plt.show()
+    # print(numExpanded)            
+    # plt.show()
         
         
         #print(maze)
@@ -279,4 +293,4 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
     
  
  
-maze_solver_dijkstra([60,60],[50,129],30,1)            #start, end, robot_radius,clearance
+maze_solver_dijkstra([60,60],[50,129],30,1)            #start, end, robot_diameter,clearance

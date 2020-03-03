@@ -105,7 +105,7 @@ def maze_solver_dijkstra(start,goal):
         if current==goal  or min_dist==float('inf'):
             break
         my_maze[current[0]][current[1]]=3                           #node is visited
-        output=addToVideo(output,current[0],current[1],3,video_out)
+        output=addToVideo(output,current[0],current[1],3,video_out,[False,0])
         #print("current")
         #print(current)
         #print("expanded")
@@ -184,7 +184,7 @@ def maze_solver_dijkstra(start,goal):
                     temp=n                #so that we know the node entered this loop
                     
                 my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4                               #node is looked at
-                output=addToVideo(output,int(adjacent[n][0]),int(adjacent[n][1]),4,video_out)
+                output=addToVideo(output,int(adjacent[n][0]),int(adjacent[n][1]),4,video_out,[False,0])
                 expanded.append(adjacent[n])
         numExpanded=numExpanded+1
         current=adjacent[temp]
@@ -212,10 +212,16 @@ def maze_solver_dijkstra(start,goal):
     #print(route)
     for i in route:
         my_maze[int(i[0])][int(i[1])]=0
-        output=addToVideo(output,int(i[0]),int(i[1]),0,video_out)
+        output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[False,0])
         print(i)
     maze[start[0]][start[1]]=5
     maze[goal[0]][goal[1]]=6
+
+        # Pad some frames at the end of the video
+    q=0
+    while q<1000:
+        video_out.write(output)
+        q+=1
 
     cv2.imshow("Final",output)
     cv2.waitKey(0)
