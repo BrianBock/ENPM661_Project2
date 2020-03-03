@@ -14,23 +14,31 @@ Created on Sun Feb 23 16:44:26 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import mazemaker
-def dist(current,parent):
-    dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
-    return dist
+import cv2
+import datetime
+from datetime import datetime as dtime
+import imutils
+import time
 
-def Write(file1,c1):                                                                        #function to write a list into a file
-    for c in c1:
-       file1.write(' '.join([str(elem) for elem in c])) 
-       file1.write("\n") 
+from functions import*
 
-def listToString(s):  
+# def dist(current,parent):
+#     dist=np.sqrt(np.square(current[0]-parent[0])+np.square(current[1]-parent[1]))
+#     return dist
+
+# def Write(file1,c1):                                                                        #function to write a list into a file
+#     for c in c1:
+#        file1.write(' '.join([str(elem) for elem in c])) 
+#        file1.write("\n") 
+
+# def listToString(s):  
  
-    str1 = ""  
+#     str1 = ""  
  
-    for ele in s:  
-        str1 += ele   
+#     for ele in s:  
+#         str1 += ele   
 
-    return str1 
+#     return str1 
 
 
 def robotInspace(x,y,d,maze):
@@ -49,8 +57,6 @@ def robotInspace(x,y,d,maze):
             return False
     return True
         
-    
-
 
 
 
@@ -58,6 +64,10 @@ def robotInspace(x,y,d,maze):
 
 
 def maze_solver_dijkstra(start,goal,diameter,clearance):
+    write_to_video=True
+    mazetype="trial"
+
+
     d=(diameter/2)+clearance
     print("Sol of dijkstra")
     maze=mazemaker.mazeMaker("trial")
@@ -71,11 +81,39 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
     
 
     maze_size=[len(maze),len(maze[0])]
-   
+    maze_height=len(maze)
+    maze_width=len(maze[0])
+
+    my_maze=np.zeros((maze_size))
+
+
+
+    # Define the codec and initialize the output file
+    if write_to_video:
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        today = time.strftime("%m-%d__%H.%M.%S")
+        videoname="Rigid"+str(mazetype)+str(today)
+        fps_out = 500
+        video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
+        # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
+        print("Writing to Video, Please Wait")
+
+
     my_maze=maze
     my_maze[start[0]][start[1]]=5
     my_maze[goal[0]][goal[1]]=6
     print(maze_size)
+
+
+
+    output=np.zeros((maze_height, maze_width,3),np.uint8)
+    for y in range (len(maze)):
+        for x in range(len(maze[0])):
+            if my_maze[y][x]==2:
+                output[y][x]=(0,0,255)
+    cv2.imshow("Output", output)
+
+
 
     distance_from_start=np.zeros((maze_size))
     parent=np.zeros(([maze_size[0],maze_size[1],2]))
@@ -110,6 +148,8 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
         if current==goal  or min_dist==float('inf'):
             break
         my_maze[current[0]][current[1]]=3                           #node is visited
+        output=addToVideo(output,current[0],current[1],3,video_out)
+
         expanded.remove(current)
         distance_from_start[current[0]][current[1]]=float('inf')     #so that next node is explored
         
@@ -183,6 +223,8 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
                     parent[int(adjacent[n][0])] [int(adjacent[n][1])]=current
                     temp=n                #so that we know the node entered this loop
                 my_maze[int(adjacent[n][0])] [int(adjacent[n][1])]=4                               #node is looked at
+                output=addToVideo(output,int(adjacent[n][0]),int(adjacent[n][1]),4,video_out)
+
                 expanded.append(adjacent[n])
         
         numExpanded=numExpanded+1
@@ -212,6 +254,7 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
     #print(route)
     for i in route:
         maze[int(i[0])][int(i[1])]=0
+        output=addToVideo(output,int(i[0]),int(i[1]),0,video_out)
         print(i)
     maze[start[0]][start[1]]=5
     maze[goal[0]][goal[1]]=6
@@ -224,7 +267,7 @@ def maze_solver_dijkstra(start,goal,diameter,clearance):
                 #plt.plot(n,m,'mo')
             if my_maze[m][n]==2:
                 plt.plot(n,m,'ro')
-            if maze[m][n]==0:
+            if my_maze[m][n]==0:
                 plt.plot(n,m,'bo',markersize=int(d*2))
             
     print(numExpanded)            
