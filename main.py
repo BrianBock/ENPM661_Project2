@@ -1,6 +1,6 @@
 
 from functions import*
-# from djikstra import*
+from djikstra import*
 
 print("Welcome to our djikstra solver!")
 
@@ -11,11 +11,18 @@ while type_needed==True:
 
 	if solver_type.lower()=="point":
 		print("Point robot selected")
+		robot_type="point"
 		type_needed=False
+		diameter=0
+		clearance=0
 
 	elif solver_type.lower()=="rigid":
 		print("Rigid robot selected.")
+		robot_type="rigid"
 		type_needed=False
+		diameter,clearance=input("Enter the robot diameter and clearance 'd c':\n").split()
+		diameter=int(diameter)
+		clearance=int(clearance)
 
 	else:
 		print("Invalid robot type entered. Please try again.")
@@ -28,10 +35,12 @@ while maze_needed==True:
 
 	if maze_type.lower()=="trial":
 		print("Trial maze selected")
+		mazetype="trial"
 		maze_needed=False
 
 	elif maze_type.lower()=="final":
 		print("Final maze selected.")
+		mazetype="final"
 		maze_needed=False
 
 	else:
@@ -46,5 +55,6 @@ goalx=int(goalx)
 goaly=int(goaly)
 
 
+djikstra(robot_type,mazetype,startx,starty,goalx,goaly,diameter,clearance)
 
 
