@@ -37,19 +37,41 @@ while maze_needed==True:
 		print("Trial maze selected")
 		mazetype="trial"
 		maze_needed=False
+		mazewidth=200
+		mazeheight=100
 
 	elif maze_type.lower()=="final":
 		print("Final maze selected.")
 		mazetype="final"
 		maze_needed=False
+		mazewidth=300
+		mazeheight=200
 
 	else:
 		print("Invalid maze type entered. Please try again.")
 		maze_needed=True
 
-startx,starty=input("Enter the start position 'x y':\n").split()
-startx=int(startx)
-starty=int(starty)
+start_needed=True
+while start_needed==True:
+	startx,starty=input("Enter the start position 'x y':\n").split()
+	startx=int(startx)
+	starty=int(starty)
+	if startx > mazewidth or starty >mazeheight:
+		print("That start position is outside of the maze. The maze you selected has dimensions ("+str(mazewidth)+","+str(mazeheight)+"). Try again.")
+	else:
+		start_needed=False
+
+goal_needed=True
+while goal_needed==True:
+	goalx,goaly=input("Enter the start position 'x y':\n").split()
+	goalx=int(goalx)
+	goaly=int(goaly)
+	if goalx > mazewidth or goaly >mazeheight:
+		print("That goal position is outside of the maze. The maze you selected has dimensions ("+str(mazewidth)+","+str(mazeheight)+"). Try again.")
+	else:
+		goal_needed=False
+
+
 goalx,goaly=input("Enter the goal position 'x y':\n").split()
 goalx=int(goalx)
 goaly=int(goaly)
