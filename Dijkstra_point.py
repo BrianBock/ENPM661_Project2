@@ -19,7 +19,7 @@ import time
 def point_dijkstra(mazetype,start,goal):
     write_to_video=True
     # mazetype="trial"
-        start = dtime.now()
+    start = dtime.now()
 
 
 
@@ -68,7 +68,7 @@ def point_dijkstra(mazetype,start,goal):
     print(len(output),len(output[0]))
 
     print(maze_size)
-    print(len(output),len(output[0]))
+    #print(len(output),len(output[0]))
 
     distance_from_start=np.zeros((maze_size))
     parent=np.zeros(([maze_size[0],maze_size[1],2]))
@@ -207,7 +207,10 @@ def point_dijkstra(mazetype,start,goal):
     for i in route:
         my_maze[int(i[0])][int(i[1])]=0
         output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[False,0])
-        print(i)
+        #Slow down path plotting at the end
+        for j in range(100):
+            output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[True,robot_radius])
+        #print(i)
     maze[start[0]][start[1]]=5
     maze[goal[0]][goal[1]]=6
 
