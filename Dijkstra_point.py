@@ -209,7 +209,7 @@ def point_dijkstra(mazetype,start,goal):
         output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[False,0])
         #Slow down path plotting at the end
         for j in range(100):
-            output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[True,robot_radius])
+            output=addToVideo(output,int(i[0]),int(i[1]),0,video_out,[False,0])
         #print(i)
     maze[start[0]][start[1]]=5
     maze[goal[0]][goal[1]]=6
