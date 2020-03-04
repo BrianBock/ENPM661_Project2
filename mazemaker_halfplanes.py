@@ -111,8 +111,19 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 
 		# Generate 6-poly obstacle
 		polypts=np.array([[25,15], [75,15], [100,50], [75,80], [50,50], [20,80]])
-		poly_slopes=[]
-		poly_slopes.append(getSlope(polypts[0][0],polypts[0][1],polypts[1][0],polypts[1][1]))
+		poly_slopes1=[] # the triangle(ish) shape on the left half of the polygon
+		poly_slopes1.append(getSlope(polypts[0][0],polypts[0][1],polypts[1][0],polypts[1][1]))
+		poly_slopes1.append(getSlope(polypts[1][0],polypts[1][1],polypts[4][0],polypts[4][1]))
+		poly_slopes1.append(getSlope(polypts[4][0],polypts[4][1],polypts[5][0],polypts[5][1]))
+		poly_slopes1.append(getSlope(polypts[5][0],polypts[5][1],polypts[0][0],polypts[0][1]))
+
+
+		poly_slopes2=[] # the diamond shape on the right half of the polygon
+		poly_slopes2.append(getSlope(polypts[1][0],polypts[1][1],polypts[2][0],polypts[2][1]))
+		poly_slopes2.append(getSlope(polypts[2][0],polypts[2][1],polypts[3][0],polypts[3][1]))
+		poly_slopes2.append(getSlope(polypts[3][0],polypts[3][1],polypts[4][0],polypts[4][1]))
+		poly_slopes2.append(getSlope(polypts[4][0],polypts[4][1],polypts[1][0],polypts[1][1]))
+
 
 		cv2.drawContours(finalmaze,[polypts],-1,(255,255,255),-1)
 		#cv2.imshow("The maze",finalmaze)
