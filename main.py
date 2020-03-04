@@ -1,6 +1,7 @@
 
 from functions import*
-from djikstra import*
+from Dijkstra_point import*
+from Dijkstra_rigid import*
 
 
 print("Welcome to our djikstra solver!")
@@ -73,6 +74,26 @@ while goal_needed==True:
 		print("That goal is the same as the start position! Try something harder.")
 	else:
 		goal_needed=False
+
+
+
+
+
+
+def djikstra(robot_type,mazetype,startx,starty,goalx,goaly,diameter,clearance):
+    if robot_type.lower()=="point":
+        point_dijkstra(mazetype,[starty,startx],[goaly,goalx])
+    elif robot_type.lower()=="rigid":
+        rigid_dijkstra(mazetype,[starty,startx],[goaly,goalx],diameter,clearance)            #start, end, robot_diameter,clearance)
+
+    return
+
+
+
+
+
+
+
 
 djikstra(robot_type,mazetype,startx,starty,goalx,goaly,diameter,clearance)
 
