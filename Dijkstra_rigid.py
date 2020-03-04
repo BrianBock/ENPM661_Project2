@@ -43,7 +43,7 @@ def rigid_dijkstra(mazetype,start,goal,diameter,clearance):
     write_to_video=True
     mazetype="trial"
 
-    start = dtime.now()
+    starttime = dtime.now()
 
     d=(diameter/2)+clearance
     robot_radius=diameter/2
@@ -246,8 +246,8 @@ def rigid_dijkstra(mazetype,start,goal,diameter,clearance):
         video_out.write(output)
         q+=1
 
-    end = dtime.now()
-    runtime=end-start
+    endtime = dtime.now()
+    runtime=endtime-starttime
     print("Finished in "+str(runtime)+" (hours:min:sec)")
 
     cv2.imshow("Final",output)
