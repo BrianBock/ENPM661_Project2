@@ -30,7 +30,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 					trialmaze[y][x]=2
 
 
-		print(trialmaze)
+		#print(trialmaze)
 		print("Trial Maze generated.")
 		return trialmaze
 
@@ -81,22 +81,26 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		y4=y3+int(75*math.sin(math.radians(30)))
 		rectpoints=np.array([[x1,y1], [x2,y2],[x3,y3], [x4,y4]])
 		cv2.drawContours(finalmaze,[rectpoints],-1,(255,255,255),-1)
-		
+		#print("rect complt")
 
 		# Generate 6-poly obstacle
 		polypts=np.array([[25,15], [75,15], [100,50], [75,80], [50,50], [20,80]])
 		cv2.drawContours(finalmaze,[polypts],-1,(255,255,255),-1)
-		cv2.imshow("The maze",finalmaze)
-		cv2.waitKey(0)
-
+		#cv2.imshow("The maze",finalmaze)
+		#cv2.waitKey(0)
+        
+        
 		maze=np.empty((height,width),dtype='object')
-		for row in range(0,width):
-			for col in range(0,height):
-				if (finalmaze[col][row].all()==0):
+        
+		for row in range(width):
+			for col in range(height):
+                
+                
+				if finalmaze[col][row][0]==0:
 					maze[col][row]=1
-				elif(finalmaze[col][row].all()==255):
+				elif finalmaze[col][row][0]==255:
 					maze[col][row]=2
-		print(maze)
+		
 
 
 		print("Final Maze generated.")
