@@ -60,7 +60,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		for x in range (circle_boundbox_x,circle_boundbox_x+2*radius):
 			for y in range(circle_boundbox_y,circle_boundbox_y+2*radius):
 				if((x-circle_centerx)**2+(y-circle_centery)**2<radius**2):
-					finalmaze[y][x]=2
+					finalmaze[y][x]=(255,255,255)
 
 		
 
