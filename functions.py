@@ -24,12 +24,6 @@ def listToString(s):
 
 
 
-
-
-
-
-
-
 def addToVideo(frame, y, x, status, video_out,show_robot):#addToVideo(output,(y,x),3,video_out,[True, radius])
     #print("Saving frame to video")
     if status==3: # Visited
@@ -55,6 +49,6 @@ def addToVideo(frame, y, x, status, video_out,show_robot):#addToVideo(output,(y,
     else:
         video_out.write(frame)
         #print("Frame saved")
-        cv2.imshow("Frame",frame)
-        cv2.waitKey(1)
+        # cv2.imshow("Frame",frame)
+        # cv2.waitKey(1)
     return frame
