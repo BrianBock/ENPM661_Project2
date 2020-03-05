@@ -84,15 +84,20 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		diamond_slopes.append(getSlope(diamondpts[1][0],diamondpts[1][1],diamondpts[2][0],diamondpts[2][1]))
 		diamond_slopes.append(getSlope(diamondpts[2][0],diamondpts[2][1],diamondpts[3][0],diamondpts[3][1]))
 		diamond_slopes.append(getSlope(diamondpts[3][0],diamondpts[3][1],diamondpts[0][0],diamondpts[0][1]))
+
+		diamond_b1=getIntercept(diamondpts[1][0],diamondpts[1][1],diamondpts[2][0],diamondpts[2][1])
+		diamond_b2=getIntercept(diamondpts[3][0],diamondpts[3][1],diamondpts[0][0],diamondpts[0][1])
+		diamond_b3=getIntercept(diamondpts[2][0],diamondpts[2][1],diamondpts[3][0],diamondpts[3][1])
+		diamond_b4=getIntercept(diamondpts[0][0],diamondpts[0][1],diamondpts[1][0],diamondpts[1][1])
 		# cv2.drawContours(finalmaze,[diamondpts],-1,(255,255,255),-1)
 
 		# Half Planes
 		for x in range(225, 250):
 			for y in range(160,190):
-				y1=diamond_slopes[1]*x+b1
-				y2=diamond_slopes[3]*x+b2
-				y3=diamond_slopes[2]*x+b3
-				y4=diamond_slopes[0]*x+b4
+				y1=diamond_slopes[1]*x+diamond_b1
+				y2=diamond_slopes[3]*x+diamond_b2
+				y3=diamond_slopes[2]*x+diamond_b3
+				y4=diamond_slopes[0]*x+diamond_b4
 
 				if y<y1 and y<y3 and y>y4 and y>y2:
 					finalmaze[y][x]=(255,255,255)
@@ -114,13 +119,18 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		rect_slopes.append(getSlope(x3,y3,x4,y4))
 		rect_slopes.append(getSlope(x4,y4,x1,y1))
 
+		rect_b1=getIntercept(x2,y2,x3,y3)
+		rect_b2=getIntercept(x4,y4,x1,y1)
+		rect_b3=getIntercept(x3,y3,x4,y4)
+		rect_b4=getIntercept(x4,y4,x1,y1)
+
 		# Half Planes
-		for x in range(x2, x4):
-			for y in range(y3,y1):
-				y1=rect_slopes[1]*x+b1
-				y2=rect_slopes[3]*x+b2
-				y3=rect_slopes[2]*x+b3
-				y4=rect_slopes[0]*x+b4
+		for x in range(int(x2), int(x4)):
+			for y in range(int(y3),int(y1)):
+				y1=rect_slopes[1]*x+rect_b1
+				y2=rect_slopes[3]*x+rect_b2
+				y3=rect_slopes[2]*x+rect_b3
+				y4=rect_slopes[0]*x+rect_b4
 
 				if y<y1 and y<y3 and y>y4 and y>y2:
 					finalmaze[y][x]=(255,255,255)
@@ -138,14 +148,19 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		poly_slopes1.append(getSlope(polypts[4][0],polypts[4][1],polypts[5][0],polypts[5][1]))
 		poly_slopes1.append(getSlope(polypts[5][0],polypts[5][1],polypts[0][0],polypts[0][1]))
 
+		poly1_b1=getIntercept(polypts[1][0],polypts[1][1],polypts[4][0],polypts[4][1])
+		poly1_b2=getIntercept(polypts[5][0],polypts[5][1],polypts[0][0],polypts[0][1])
+		poly1_b3=getIntercept(polypts[4][0],polypts[4][1],polypts[5][0],polypts[5][1])
+		poly1_b4=getIntercept(polypts[0][0],polypts[0][1],polypts[1][0],polypts[1][1])
+
 
 		# Half Planes for Left Half of polygon
 		for x in range(20, 75):
 			for y in range(15,80):
-				y1=poly_slopes1[1]*x+b1
-				y2=poly_slopes1[3]*x+b2
-				y3=poly_slopes1[2]*x+b3
-				y4=poly_slopes1[0]*x+b4
+				y1=poly_slopes1[1]*x+poly1_b1
+				y2=poly_slopes1[3]*x+poly1_b2
+				y3=poly_slopes1[2]*x+poly1_b3
+				y4=poly_slopes1[0]*x+poly1_b4
 
 				if y<y1 and y<y3 and y>y4 and y>y2:
 					finalmaze[y][x]=(255,255,255)
@@ -157,14 +172,19 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		poly_slopes2.append(getSlope(polypts[3][0],polypts[3][1],polypts[4][0],polypts[4][1]))
 		poly_slopes2.append(getSlope(polypts[4][0],polypts[4][1],polypts[1][0],polypts[1][1]))
 
+		poly2_b1=getIntercept(polypts[4][0],polypts[4][1],polypts[1][0],polypts[1][1])
+		poly2_b2=getIntercept(polypts[2][0],polypts[2][1],polypts[3][0],polypts[3][1])
+		poly2_b3=getIntercept(polypts[1][0],polypts[1][1],polypts[2][0],polypts[2][1])
+		poly2_b4=getIntercept(polypts[3][0],polypts[3][1],polypts[4][0],polypts[4][1])
+
 
 		# Half Planes for Right Half of polygon
 		for x in range(50, 100):
 			for y in range(15,80):
-				y1=poly_slopes2[3]*x+b1
-				y2=poly_slopes2[1]*x+b2
-				y3=poly_slopes2[0]*x+b3
-				y4=poly_slopes2[2]*x+b4
+				y1=poly_slopes2[3]*x+poly2_b1
+				y2=poly_slopes2[1]*x+poly2_b2
+				y3=poly_slopes2[0]*x+poly2_b3
+				y4=poly_slopes2[2]*x+poly2_b4
 
 				if y<y1 and y<y3 and y>y4 and y>y2:
 					finalmaze[y][x]=(255,255,255)
