@@ -69,7 +69,7 @@ def rigid_dijkstra(mazetype,start,goal,diameter,clearance):
     if write_to_video:
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         today = time.strftime("%m-%d__%H.%M.%S")
-        videoname="Rigid"+str(mazetype)+str(today)
+        videoname="Rigid"+str(mazetype)+"s("+str(start[0])+","+str(start[0])+")g("+str(goal[0])+","+str(goal[1])+")"+str(today)
         fps_out = 500
         video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
         # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
@@ -105,9 +105,11 @@ def rigid_dijkstra(mazetype,start,goal,diameter,clearance):
     current=start
     expanded=[]
     expanded.append(start)
+
     if robotInspace(start[0],start[1],d,maze)==False     or  robotInspace(goal[0],goal[1],d,maze)==False   :
             print("Could not solve")
             return
+
     while 1:
         my_maze[start[0]][start[1]]=5
         my_maze[goal[0]][goal[1]]=6
