@@ -232,6 +232,6 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		return maze
 
 
-mazeMaker("final")
+# mazeMaker("final")
 
 
