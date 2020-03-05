@@ -99,15 +99,15 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		# cv2.drawContours(finalmaze,[diamondpts],-1,(255,255,255),-1)
 
 		# Half Planes for Diamond
-		for x in range(225, 251):
+		for x in range(200, 251):
 			for y in range(160,191):
 				y1=diamond_slopes[2]*x+diamond_b[2]
 				y2=diamond_slopes[0]*x+diamond_b[0]
 				y3=diamond_slopes[1]*x+diamond_b[1]
 				y4=diamond_slopes[3]*x+diamond_b[3]
-				print(y1,y2,y3,y4)
-				if (y<y1) and (y<y3) and (y>y4) and (y>y2):
-					print("making diamond")
+				# print(y1,y2,y3,y4)
+				if (y>=y1) and (y>=y3) and (y<=y4) and (y<=y2):
+					# print("making diamond")
 					finalmaze[y][x]=(255,255,255)
 
 
@@ -133,17 +133,24 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		rect_b.append(getIntercept(x3,y3,x4,y4))
 		rect_b.append(getIntercept(x4,y4,x1,y1))
 
+		print(x2,x4)
+		print(y3,y1)
 
+		rect_y1=y1
+		rect_y3=y3
+		rect_x2=x2
+		rect_x4=x4
 
-		# Half Planes
-		for x in range(int(x2), int(x4)):
-			for y in range(int(y3),int(y1)):
+		# Half Planes for Rectangle
+		for x in range(int(rect_x2), int(rect_x4)):
+			for y in range(int(rect_y3),int(rect_y1)):
 				y1=rect_slopes[1]*x+rect_b[1]
 				y2=rect_slopes[3]*x+rect_b[3]
 				y3=rect_slopes[2]*x+rect_b[2]
 				y4=rect_slopes[0]*x+rect_b[0]
+				# print(y,y1,y2,y3,y4)
 
-				if y<y1 and y<y3 and y>y4 and y>y2:
+				if y>=y1 and y>=y3 and y<=y4 and y<=y2:
 					finalmaze[y][x]=(255,255,255)
 
 
@@ -199,7 +206,7 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 				y3=poly_slopes2[0]*x+poly2_b[0]
 				y4=poly_slopes2[2]*x+poly2_b[2]
 
-				if y<y1 and y<y3 and y>y4 and y>y2:
+				if (y>=y1) and (y>=y3) and (y<=y4) and (y<=y2):
 					finalmaze[y][x]=(255,255,255)
 
 
