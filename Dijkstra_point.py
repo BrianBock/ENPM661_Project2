@@ -18,7 +18,6 @@ import time
 
 
 def point_dijkstra(mazetype,start,goal):
-    write_to_video=True
     # mazetype="trial"
     starttime = dtime.now()
 
@@ -43,14 +42,14 @@ def point_dijkstra(mazetype,start,goal):
 
 
     # Define the codec and initialize the output file
-    if write_to_video:
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        today = time.strftime("%m-%d__%H.%M.%S")
-        videoname="Point"+str(mazetype)+"s("+str(start[0])+","+str(start[0])+")g("+str(goal[0])+","+str(goal[1])+")"+str(today)
-        fps_out = 500
-        video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
-        # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
-        print("Writing to Video, Please Wait")
+    # if write_to_video:
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    today = time.strftime("%m-%d__%H.%M.%S")
+    videoname="Point"+str(mazetype)+"-s("+str(start[0])+","+str(start[0])+")g("+str(goal[0])+","+str(goal[1])+")"+str(today)
+    fps_out = 500
+    video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
+    # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
+    print("Writing to Video, Please Wait")
 
 
 
