@@ -134,10 +134,6 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		rect_b.append(getIntercept(x4,y4,x1,y1))
 
 
-		# 	=getIntercept(x2,y2,x3,y3)
-		# rect_b2=getIntercept(x4,y4,x1,y1)
-		# rect_b3=getIntercept(x3,y3,x4,y4)
-		# rect_b4=getIntercept(x4,y4,x1,y1)
 
 		# Half Planes
 		for x in range(int(x2), int(x4)):
