@@ -6,7 +6,7 @@ Created on Sun Feb 23 16:44:26 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import mazemaker
+from mazemaker_halfplanes import*
 from functions import*
 import cv2
 import datetime
@@ -47,7 +47,7 @@ def rigid_dijkstra(mazetype,start,goal,diameter,clearance):
     d=(diameter/2)+clearance
     robot_radius=diameter/2
     print("Sol of dijkstra")
-    maze=mazemaker.mazeMaker(mazetype)
+    maze=mazeMaker(mazetype)
     if maze[goal[0]][goal[1]]==2    or   maze[start[0]][start[1]]==2:
         print("Cannot solve as start or goal is inside obstacle")
         return

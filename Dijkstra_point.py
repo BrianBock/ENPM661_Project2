@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import mazemaker
+# import mazemaker
+from mazemaker_halfplanes import*
 from functions import*
 import cv2
 import datetime
@@ -24,7 +25,7 @@ def point_dijkstra(mazetype,start,goal):
 
 
     print("Sol of dijkstra")
-    maze=mazemaker.mazeMaker(mazetype)
+    maze=mazeMaker(mazetype)
     # cv2.imshow("Orignal maze",output)
     #cv2.waitKey(0)
     if maze[goal[0]][goal[1]]==2    or   maze[start[0]][start[1]]==2:
