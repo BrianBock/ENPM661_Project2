@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  4 23:19:04 2020
 
-@author: prana
-"""
 
 import numpy as np
+
+
 def checkCurves(point):
     x_dash=(1-np.square((point[0]-150)/40))
     if x_dash>0:
