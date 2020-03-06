@@ -15,11 +15,14 @@ Final Maze, Point Robot, Cartesian Coordinates - https://youtu.be/xTFjtWXCkwA
 
 ## Images
 Final Maze before solving
+
 ![Final Maze](https://github.com/BrianBock/ENPM661_Project2/blob/master/images/maze.png)
 
 Final Maze (5,5)->(295,195) - Image Coordinates - Solved
+
 ![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/blob/master/images/final_mze_imgecoords.png)
 
 Final Maze (5,5)->(295,195) - Cartesian Coordinates - Solved
+
 ![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/blob/master/images/cartesian.png)
 
