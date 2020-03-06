@@ -10,3 +10,7 @@ Trial Maze, Point Robot - https://youtu.be/2drIzgDzgkI
 Final Maze, Point Robot - https://youtu.be/aG1dgWaPt4A
 
 Final Maze, Rigid Robot - https://youtu.be/bQKFZdgnb1A
+
+## Images
+
+![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/images/final_mze_imgecoords.PNG)
