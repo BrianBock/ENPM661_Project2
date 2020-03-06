@@ -133,8 +133,8 @@ def mazeMaker(mazetype): #mazetype can be either "Trial" or "Final"
 		rect_b.append(getIntercept(x3,y3,x4,y4))
 		rect_b.append(getIntercept(x4,y4,x1,y1))
 
-		print(x2,x4)
-		print(y3,y1)
+		# print(x2,x4)
+		# print(y3,y1)
 
 		rect_y1=y1
 		rect_y3=y3
