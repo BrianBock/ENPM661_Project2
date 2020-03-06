@@ -45,9 +45,9 @@ def point_dijkstra(mazetype,start,goal):
     # if write_to_video:
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     today = time.strftime("%m-%d__%H.%M.%S")
-    videoname="Point"+str(mazetype)+"-s("+str(start[0])+","+str(start[0])+")g("+str(goal[0])+","+str(goal[1])+")"+str(today)
+    videoname="Point"+str(mazetype)+"-s("+str(start[0])+","+str(start[0])+")g("+str(goal[0])+","+str(goal[1])+")"+str(today)+".avi"
     fps_out = 500
-    video_out = cv2.VideoWriter(str(videoname)+".avi", fourcc, fps_out, (maze_width, maze_height))
+    video_out = cv2.VideoWriter(str(videoname), fourcc, fps_out, (maze_width, maze_height))
     # video_out=cv2.VideoWriter(str(videoname)+".avi",cv2.VideoWriter_fourcc('M','J','P','G'),100,(maze_height,maze_width))
     print("Writing to Video, Please Wait")
 
@@ -65,9 +65,9 @@ def point_dijkstra(mazetype,start,goal):
             if my_maze[y][x]==2:
                 output[y][x]=(0,0,255)
     # cv2.imshow("Output", output)
-    print(len(output),len(output[0]))
+    # print(len(output),len(output[0]))
 
-    print(maze_size)
+    # print(maze_size)
     #print(len(output),len(output[0]))
 
     distance_from_start=np.zeros((maze_size))
@@ -227,4 +227,5 @@ def point_dijkstra(mazetype,start,goal):
     cv2.imshow("Final",output)
     cv2.waitKey(0)
 
-    print("Done!")    
+    print("Done!")   
+    print("To view the animation of this run, please navigate to the directory this program was launched in and find "+str(videoname)) 
