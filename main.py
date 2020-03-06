@@ -53,6 +53,24 @@ while maze_needed==True:
 		print("Invalid maze type entered. Please try again.")
 		maze_needed=True
 
+
+coordinate_needed=True
+while coordinate_needed:
+	coordinate_system=input("Would you like to use Carteisan coordinates (origin at the bottom left) or image coordinates (origin in the top left)? Enter 'Cartesian' or 'Image'")
+	if coordinate_system.lower()='cartesian':
+		print("Cartesian coordinates selected. The origin will be in the bottom left, with positive y in the upward direction.")
+		cartesian=True
+		coordinate_needed=False
+
+	elif coordinate_system.lower()='image':
+		print("Image coordinates selected. The origin will be in the top right, with positive y in the downward direction")
+		coordinate_needed=False
+		cartesian=False
+	else:
+		print("Invalid coordinate system entered. Please try again.")
+		coordinate_needed=True
+
+
 start_needed=True
 while start_needed==True:
 	startx,starty=input("Enter the start position 'x y':\n").split()
@@ -62,6 +80,8 @@ while start_needed==True:
 		print("That start position is outside of the maze. The maze you selected has dimensions ("+str(mazewidth)+","+str(mazeheight)+"). Try again.")
 	else:
 		start_needed=False
+		if cartesian:
+			starty=mazeheight-starty
 
 goal_needed=True
 while goal_needed==True:
@@ -74,6 +94,8 @@ while goal_needed==True:
 		print("That goal is the same as the start position! Try something harder.")
 	else:
 		goal_needed=False
+		if cartesian:
+			goaly=mazeheight-goaly
 
 
 
