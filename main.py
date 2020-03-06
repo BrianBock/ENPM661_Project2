@@ -56,13 +56,13 @@ while maze_needed==True:
 
 coordinate_needed=True
 while coordinate_needed:
-	coordinate_system=input("Would you like to use Carteisan coordinates (origin at the bottom left) or image coordinates (origin in the top left)? Enter 'Cartesian' or 'Image'")
-	if coordinate_system.lower()='cartesian':
+	coordinate_system=input("Would you like to use Carteisan coordinates (origin at the bottom left) or image coordinates (origin in the top left)? Enter 'Cartesian' or 'Image':\n")
+	if coordinate_system.lower()=='cartesian':
 		print("Cartesian coordinates selected. The origin will be in the bottom left, with positive y in the upward direction.")
 		cartesian=True
 		coordinate_needed=False
 
-	elif coordinate_system.lower()='image':
+	elif coordinate_system.lower()=='image':
 		print("Image coordinates selected. The origin will be in the top right, with positive y in the downward direction")
 		coordinate_needed=False
 		cartesian=False
