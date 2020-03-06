@@ -13,4 +13,4 @@ Final Maze, Rigid Robot - https://youtu.be/bQKFZdgnb1A
 
 ## Images
 
-![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/images/final_mze_imgecoords.png)
+![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/blob/master/images/final_mze_imgecoords.png)
