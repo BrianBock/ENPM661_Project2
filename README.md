@@ -28,3 +28,11 @@ Final Maze (5,5)->(295,195) - Cartesian Coordinates - Solved
 
 ![Final Maze (5,5)->(295,195)](https://github.com/BrianBock/ENPM661_Project2/blob/master/images/cartesian.png)
 
+## Required Packages
+numpy
+matplotlib
+cv2
+datetime
+imutils
+time
+math
