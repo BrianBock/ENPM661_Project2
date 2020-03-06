@@ -4,6 +4,8 @@ To run this project, download all files. Run `main.py`. The program will prompt 
 
 The program will generate a .AVI file in the same directory, which is the animation of the solution. The file name includes information about the chosen parameters and the run's timestamp. We recommend viewing this video in VLC (https://www.videolan.org/vlc/index.html)
 
+This entire project is written in Python 3.7.
+
 ## Videos
 Trial Maze, Point Robot - https://youtu.be/2drIzgDzgkI
 
